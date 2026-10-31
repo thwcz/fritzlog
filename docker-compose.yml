@@ -1,0 +1,22 @@
+services:
+  fritzlog:
+    build: .
+    image: fritzlog:latest
+    container_name: fritzlog
+    restart: unless-stopped
+
+    environment:
+      TZ: "Europe/Berlin"
+
+      FRITZ_HOST: "${FRITZ_HOST:-192.168.178.1}"
+      FRITZ_USER: "${FRITZ_USER:-syslog-user}"
+      FRITZ_PASSWORD: "${FRITZ_PASSWORD}"
+
+      SYSLOG_HOST: "${SYSLOG_HOST:-127.0.0.1}"
+      SYSLOG_PORT: "${SYSLOG_PORT:-514}"
+
+      POLL_INTERVAL: "${POLL_INTERVAL:-60}"
+      LOG_LEVEL: "${LOG_LEVEL:-INFO}"
+
+    volumes:
+      - ./data:/data
